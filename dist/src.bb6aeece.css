@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat");
+@import url("https://fonts.googleapis.com/css?family=Audiowide");
 * {
   box-sizing: border-box;
   list-style: none; }
@@ -10,12 +10,14 @@ body {
   position: relative;
   background-color: #25292e;
   color: #e0e0e0;
-  font-family: 'Montserrat', sans-serif; }
+  font-family: 'Audiowide', cursive; }
 
 h1 {
   margin: 50px auto;
   text-align: center;
-  font-size: 2.4rem; }
+  font-size: 2.4rem;
+  color: #00ff9f;
+  text-shadow: 3px 3px 3px #bd00ff; }
 
 .wrap {
   width: 450px;
@@ -30,24 +32,22 @@ h1 {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer; }
     .row .cell .grid:hover {
       background: rgba(255, 255, 255, 0.1); }
-  .row .cell.white .grid {
-    background: #e0e0e0; }
+  .row .cell.green .grid {
+    background: #00ff9f;
+    box-shadow: 2px 2px 2px #bd00ff;
+    transition: all;
+    transition-duration: 0.3s;
+    animation: scaleAnimation 0.5s ease 1 both; }
   .row .cell.purple .grid {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#874284+0,6e3375+100 */
-    background: #874284;
-    /* Old browsers */
-    background: -moz-radial-gradient(center, ellipse cover, #874284 0%, #6e3375 100%);
-    /* FF3.6-15 */
-    background: -webkit-radial-gradient(center, ellipse cover, #874284 0%, #6e3375 100%);
-    /* Chrome10-25,Safari5.1-6 */
-    background: radial-gradient(ellipse at center, #874284 0%, #6e3375 100%);
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#874284', endColorstr='#6e3375',GradientType=1 );
-    /* IE6-9 fallback on horizontal gradient */ }
+    background: #d600ff;
+    box-shadow: 2px 2px 2px #001eff;
+    transition: all;
+    transition-duration: 0.3s;
+    animation: scaleAnimation 0.5s ease-in-out 1 both; }
 
 .game-info {
   font-size: 1.4rem; }
@@ -64,9 +64,24 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column; }
+  flex-direction: column;
+  display: none; }
   .modal .winner-wrap {
     font-size: 1.4rem;
     font-weight: bold; }
   .modal button {
     margin-top: 30px; }
+  .modal #winner {
+    font-size: 1.7rem; }
+    .modal #winner.purple {
+      color: #d600ff; }
+    .modal #winner.green {
+      color: #00ff9f; }
+
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1); }
+  50% {
+    transform: scale(1.2); }
+  100% {
+    transform: scale(0.9); } }

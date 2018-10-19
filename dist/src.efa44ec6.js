@@ -109,7 +109,7 @@ var setGame = function setGame() {
   // 게임의 초기상태를 만드는 함수
 
   // 1) 상태 업데이트
-  // 기본 player 를 'white'로 설정한다.
+  // 기본 player 를 'green'로 설정한다.
   gameState.player = true;
   // 기본 board array의 요소를 모두 0 으로 만든다.
   gameState.board.map(function (row, rowIndex) {
@@ -118,24 +118,43 @@ var setGame = function setGame() {
     });
   });
 
+  // winner 엘리먼트의 클래스를 모두 삭제한다.
+  document.getElementById('winner').classList.remove('green');
+  document.getElementById('winner').classList.remove('purple');
+
   // 2) 화면 그리기
   drawGame();
 };
 
 var drawGame = function drawGame() {
   // 1) player 상태를 html 에 그려준다.
-  document.getElementById('currentPlayer').textContent = gameState.player ? 'white' : 'purple';
+  document.getElementById('currentPlayer').textContent = gameState.player ? 'green' : 'purple';
 
   // 2) gameState.board 의 상태를 board element 에 그려준다.
   document.querySelectorAll('.row').forEach(function (rowEl, rowIndex) {
     rowEl.querySelectorAll('.cell').forEach(function (colEl, colIndex) {
       if (gameState.board[rowIndex][colIndex] === 1) {
-        colEl.classList.add('white');
+        colEl.classList.add('green');
       } else if (gameState.board[rowIndex][colIndex] === 2) {
         colEl.classList.add('purple');
+      } else if (gameState.board[rowIndex][colIndex] === 0) {
+        colEl.classList.remove('purple');
+        colEl.classList.remove('green');
       }
     });
   });
+
+  // 승리자 체크 함수 : 상태를 모두 업데이트 한 뒤 확인해야 한다.
+  if (isWinner(gameState.board) === 1) {
+    document.querySelector('.modal').style.display = 'flex';
+    document.getElementById('winner').textContent = 'green';
+    document.getElementById('winner').classList.add('green');
+  }
+  if (isWinner(gameState.board) === 2) {
+    document.querySelector('.modal').style.display = 'flex';
+    document.getElementById('winner').textContent = 'purple';
+    document.getElementById('winner').classList.add('purple');
+  }
 
   console.log('draw');
 };
@@ -146,8 +165,8 @@ document.querySelectorAll('.row').forEach(function (rowEl, rowIndex) {
     colEl.addEventListener('click', function (e) {
       // click eventhandler 를 추가한다.
       console.log('html element click event');
-      // 해당 엘리먼트가 white or purple 클래스를 가지고 있다면 상태를 변경하지 않고 return 한다.
-      if (colEl.classList.contains('white') || colEl.classList.contains('purple')) {
+      // 해당 엘리먼트가 green or purple 클래스를 가지고 있다면 상태를 변경하지 않고 return 한다.
+      if (colEl.classList.contains('green') || colEl.classList.contains('purple')) {
         return;
       }
 
@@ -165,8 +184,6 @@ document.querySelectorAll('.row').forEach(function (rowEl, rowIndex) {
       console.log('player: ', gameState.player);
       console.log('board :', gameState.board);
 
-      // 승리자 체크 함수 : 상태를 모두 업데이트 한 뒤 확인해야 한다.
-      checkWinner();
       // 변경한 상태를 화면에 그린다.
       drawGame();
     });
@@ -179,14 +196,50 @@ document.getElementById('btnReset').addEventListener('click', function (e) {
   setGame();
 });
 
-var checkWinner = function checkWinner() {};
+var isWinner = function isWinner(board) {
+  console.log('who is winner?');
+
+  // 가로
+  for (var i = 0; i < board.length; i++) {
+    var currentPlayer = void 0;
+    var count = void 0;
+    for (var j = 0; j < board.length; j++) {
+      if (currentPlayer !== board[i][j]) {
+        currentPlayer = board[i][j];
+        count = 1;
+      } else {
+        count++;
+      }
+      if ((currentPlayer === 1 || currentPlayer === 2) && count === 5) {
+        return currentPlayer;
+      }
+    }
+  }
+
+  // 세로
+  for (var _i = 0; _i < board.length; _i++) {
+    var _currentPlayer = void 0;
+    var _count = void 0;
+    for (var _j = 0; _j < board.length; _j++) {
+      if (_currentPlayer !== board[_j][_i]) {
+        _currentPlayer = board[_j][_i];
+        _count = 1;
+      } else {
+        _count++;
+      }
+      if ((_currentPlayer === 1 || _currentPlayer === 2) && _count === 5) {
+        return _currentPlayer;
+      }
+    }
+  }
+};
 
 // document ready
 document.addEventListener("DOMContentLoaded", function () {
   // 1) html document 가 준비되면 게임을 세팅하는 함수를 호출한다.
   setGame();
 });
-},{}],6:[function(require,module,exports) {
+},{}],26:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -356,5 +409,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[6,3], null)
+},{}]},{},[26,3], null)
 //# sourceMappingURL=/src.efa44ec6.map
