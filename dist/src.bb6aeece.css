@@ -12,4 +12,23 @@ body {
   font-family: 'Montserrat', sans-serif; }
 
 h1 {
-  text-align: center; }
+  margin: 50px auto;
+  text-align: center;
+  font-size: 2.4rem; }
+
+.wrap {
+  width: 450px;
+  margin: 0 auto; }
+
+.board {
+  margin: 50px auto; }
+
+.row {
+  display: flex; }
+  .row .cell .grid {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3); }
+
+.game-info {
+  font-size: 1.4rem; }
