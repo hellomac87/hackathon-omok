@@ -7,6 +7,7 @@ html {
   font-size: 10px; }
 
 body {
+  position: relative;
   background-color: #25292e;
   color: #e0e0e0;
   font-family: 'Montserrat', sans-serif; }
@@ -28,7 +29,44 @@ h1 {
   .row .cell .grid {
     width: 30px;
     height: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.3); }
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer; }
+    .row .cell .grid:hover {
+      background: rgba(255, 255, 255, 0.1); }
+  .row .cell.white .grid {
+    background: #e0e0e0; }
+  .row .cell.purple .grid {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#874284+0,6e3375+100 */
+    background: #874284;
+    /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #874284 0%, #6e3375 100%);
+    /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, #874284 0%, #6e3375 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, #874284 0%, #6e3375 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#874284', endColorstr='#6e3375',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */ }
 
 .game-info {
   font-size: 1.4rem; }
+
+.modal {
+  width: 300px;
+  height: 180px;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; }
+  .modal .winner-wrap {
+    font-size: 1.4rem;
+    font-weight: bold; }
+  .modal button {
+    margin-top: 30px; }

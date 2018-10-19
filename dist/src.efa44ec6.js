@@ -98,9 +98,95 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({6:[function(require,module,exports) {
+})({3:[function(require,module,exports) {
+// gameState : 게임과 관련된 상태를 저장하는 객체
+var gameState = {
+  player: true,
+  board: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+};
 
-},{}],13:[function(require,module,exports) {
+var setGame = function setGame() {
+  // 게임의 초기상태를 만드는 함수
+
+  // 1) 상태 업데이트
+  // 기본 player 를 'white'로 설정한다.
+  gameState.player = true;
+  // 기본 board array의 요소를 모두 0 으로 만든다.
+  gameState.board.map(function (row, rowIndex) {
+    row.map(function (colEl, colIndex) {
+      gameState.board[rowIndex][colIndex] = 0;
+    });
+  });
+
+  // 2) 화면 그리기
+  drawGame();
+};
+
+var drawGame = function drawGame() {
+  // 1) player 상태를 html 에 그려준다.
+  document.getElementById('currentPlayer').textContent = gameState.player ? 'white' : 'purple';
+
+  // 2) gameState.board 의 상태를 board element 에 그려준다.
+  document.querySelectorAll('.row').forEach(function (rowEl, rowIndex) {
+    rowEl.querySelectorAll('.cell').forEach(function (colEl, colIndex) {
+      if (gameState.board[rowIndex][colIndex] === 1) {
+        colEl.classList.add('white');
+      } else if (gameState.board[rowIndex][colIndex] === 2) {
+        colEl.classList.add('purple');
+      }
+    });
+  });
+
+  console.log('draw');
+};
+
+// grid click event handler: gameState.board 의 상태를 업데이트 하는 이벤트 핸들러
+document.querySelectorAll('.row').forEach(function (rowEl, rowIndex) {
+  rowEl.querySelectorAll('.cell').forEach(function (colEl, colIndex) {
+    colEl.addEventListener('click', function (e) {
+      // click eventhandler 를 추가한다.
+      console.log('html element click event');
+      // 해당 엘리먼트가 white or purple 클래스를 가지고 있다면 상태를 변경하지 않고 return 한다.
+      if (colEl.classList.contains('white') || colEl.classList.contains('purple')) {
+        return;
+      }
+
+      // 현재 player 의 상태에 따라 board의 해당 인덱스 요소를 1 or 2 로 변경해주는 조건문
+      if (gameState.player) {
+        gameState.board[rowIndex][colIndex] = 1;
+      } else {
+        gameState.board[rowIndex][colIndex] = 2;
+      }
+
+      // board 상태를 업데이트 한뒤, player 를 토글한다.
+      gameState.player = !gameState.player;
+
+      // TODO : 상태 확인용 console.log 개발 후 지우기
+      console.log('player: ', gameState.player);
+      console.log('board :', gameState.board);
+
+      // 승리자 체크 함수 : 상태를 모두 업데이트 한 뒤 확인해야 한다.
+      checkWinner();
+      // 변경한 상태를 화면에 그린다.
+      drawGame();
+    });
+  });
+});
+
+// modal reset btn click event handler : modal 창의 reset 버튼 클릭시
+document.getElementById('btnReset').addEventListener('click', function (e) {
+  document.querySelector('.modal').style.display = 'none';
+  setGame();
+});
+
+var checkWinner = function checkWinner() {};
+
+// document ready
+document.addEventListener("DOMContentLoaded", function () {
+  // 1) html document 가 준비되면 게임을 세팅하는 함수를 호출한다.
+  setGame();
+});
+},{}],6:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -129,7 +215,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '49799' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '56471' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -270,4 +356,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[13,6], null)
+},{}]},{},[6,3], null)
+//# sourceMappingURL=/src.efa44ec6.map
