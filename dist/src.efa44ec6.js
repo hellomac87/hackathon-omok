@@ -232,6 +232,45 @@ var isWinner = function isWinner(board) {
       }
     }
   }
+  {
+    // 대각선 좌상 우하
+    var memory = [];
+    for (var _i2 = 0; _i2 < 11; _i2++) {
+      for (var _j2 = 0; _j2 < board.length; _j2++) {
+        memory.push(board[_i2][_j2], board[_i2 + 1][_j2 + 1], board[_i2 + 2][_j2 + 2], board[_i2 + 3][_j2 + 3], board[_i2 + 4][_j2 + 4]);
+        if (memory.every(function (item) {
+          return item === 1;
+        })) {
+          return 1;
+        }
+        if (memory.every(function (item) {
+          return item === 2;
+        })) {
+          return 2;
+        }
+        memory = [];
+      }
+    }
+  }
+  {
+    var _memory = [];
+    for (var _i3 = 0; _i3 < 11; _i3++) {
+      for (var _j3 = 5; _j3 < board.length; _j3++) {
+        _memory.push(board[_i3][_j3], board[_i3 + 1][_j3 - 1], board[_i3 + 2][_j3 - 2], board[_i3 + 3][_j3 - 3], board[_i3 + 4][_j3 - 4]);
+        if (_memory.every(function (item) {
+          return item === 1;
+        })) {
+          return 1;
+        }
+        if (_memory.every(function (item) {
+          return item === 2;
+        })) {
+          return 2;
+        }
+        _memory = [];
+      }
+    }
+  }
 };
 
 // document ready
@@ -239,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 1) html document 가 준비되면 게임을 세팅하는 함수를 호출한다.
   setGame();
 });
-},{}],26:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -268,7 +307,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '56471' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '53563' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -409,5 +448,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[26,3], null)
+},{}]},{},[10,3], null)
 //# sourceMappingURL=/src.efa44ec6.map

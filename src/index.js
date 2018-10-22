@@ -148,7 +148,48 @@ const isWinner = (board) => {
       }
     }
   }
-  
+  { // 대각선 좌상 우하
+    let memory = [];
+    for (let i = 0; i < 11; i++) {
+      for (let j = 0; j < board.length; j++) {
+        memory.push(
+          board[i][j],
+          board[i + 1][j + 1],
+          board[i + 2][j + 2],
+          board[i + 3][j + 3],
+          board[i + 4][j + 4]
+        );
+        if (memory.every(item => item === 1)) {
+          return 1;
+        }
+        if (memory.every(item => item === 2)) {
+          return 2;
+        }
+        memory = [];
+      }
+    }
+  }
+  {
+    let memory = [];
+    for (let i = 0; i < 11; i++) {
+      for (let j = 5; j < board.length; j++) {
+        memory.push(
+          board[i][j],
+          board[i + 1][j - 1],
+          board[i + 2][j - 2],
+          board[i + 3][j - 3],
+          board[i + 4][j - 4]
+        );
+        if (memory.every(item => item === 1)) {
+          return 1;
+        }
+        if (memory.every(item => item === 2)) {
+          return 2;
+        }
+        memory = [];
+      }
+    }
+  }
 }
 
 // document ready
